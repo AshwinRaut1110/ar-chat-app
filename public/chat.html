@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR-Chat-App</title>
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- socket.io provides a js file for the client side -->
+    <script src="./js/mustache.min.js" defer></script>
+    <script src="./js/moment.min.js" defer></script>
+    <script src="./js/qs.min.js" defer></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="./js/index.js" defer></script>
+</head>
+
+<body>
+
+    <div class="chat">
+        <div id="sidebar" class="chat__sidebar">
+
+        </div>
+        <div class="chat__main">
+            <div id="messages" class="chat__messages"></div>
+
+            <div class="compose">
+
+                <form id="sendMessage">
+                    <input type="text" placeholder="Type A Message..." id="message" autocomplete="off" required>
+                    <button class="btn" id="sendMessageBtn">Send</button>
+                </form>
+                <button class="btn" id="sendLocation">Send Location</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- {{}} are used to inject a value into the template -->
+    <script id="message-template" type="text/html">
+            <div class="message">
+                <p>
+                    <span class="message__name">{{username}}</span>
+                    <span class="message__meta">{{createdAt}} </span>
+                </p>
+                <p>{{message}}</p>
+            </div>
+    </script>
+
+    <script id="location-message-template" type="text/html">
+            <div class="message">
+                <p>
+                    <span class="message__name">{{username}}</span>
+                    <span class="message__meta">{{createdAt}} </span>
+                </p>
+                <p><a href={{location}} target="_blank">My Current Location</a></p>
+            </div>
+    </script>
+
+    <script id="sidebar-template" type="text/html">
+        <h2 class="room-title">{{room}}</h2>
+        <h3 class="list-title">Users</h3>
+        <ul class="users">
+            <!-- rendering the users array -->
+            {{#users}}
+                <li>{{username}}</li>
+            {{/users}}
+        </ul>
+    </script>
+</body>
+
+</html>
